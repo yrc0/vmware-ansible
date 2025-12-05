@@ -1,0 +1,39 @@
+---
+- name: Session 2 - Get ESXi host facts (single host)
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    # Where to store raw JSON facts inside the repo
+    esxi_facts_output_dir: "artifacts/session2"
+
+  tasks:
+    - name: Show which ESXi host we are targeting
+      debug:
+        msg: "Collecting facts for ESXi host: {{ primary_esxi_hostname }}"
+
+    - name: Collect ESXi host facts from vCenter
+      community.vmware.vmware_host_facts:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        esxi_hostname: "{{ primary_esxi_hostname }}"
+        validate_certs: "{{ validate_certs | default(false) }}"
+      register: esxi_hostfacts
+
+    - name: Ensure artifacts directory exists
+      file:
+        path: "{{ esxi_facts_output_dir }}"
+        state: directory
+
+    - name: Save raw host facts to JSON (for reference)
+      copy:
+        dest: "{{ esxi_facts_output_dir }}/{{ primary_esxi_hostname }}_facts.json"
+        content: "{{ esxi_hostfacts | to_nice_json }}"
+
+    - name: Print a short summary for students
+      debug:
+        msg:
+          - "Host: {{ esxi_hostfacts.ansible_facts.ansible_facts.hw_product_name | default('unknown') }}"
+          - "CPU cores: {{ esxi_hostfacts.ansible_facts.ansible_facts.hw_processor_count | default('unknown') }}"
+          - "Memory (MB): {{ esxi_hostfacts.ansible_facts.ansible_facts.hw_memtotal_mb | default('unknown') }}"
