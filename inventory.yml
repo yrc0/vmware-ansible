@@ -7,4 +7,5 @@ all:
     vcenter:
       hosts:
         vcenter1:
-          ansible_host: "CHANGE_ME"  # Your vCenter FQDN or IP
+          ansible_host: "vc01.vt9labs.local"  # Your vCenter FQDN or IP
+          ansible_connection: local

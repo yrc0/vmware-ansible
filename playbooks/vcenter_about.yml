@@ -1,0 +1,19 @@
+---
+- name: Test connectivity to vCenter
+  hosts: vcenter
+  gather_facts: false
+  collections:
+    - community.vmware
+
+  tasks:
+    - name: Get vCenter about info
+      vmware_about_info:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: "{{ vcenter_validate_certs }}"
+      register: vc_about
+
+    - name: Show vCenter about info
+      debug:
+        var: vc_about
