@@ -8,4 +8,3 @@ __pycache__/
 # Logs
 *.log
 group_vars/vcenter.yml
-docs/newfeaturetest2.md
