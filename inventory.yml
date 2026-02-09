@@ -1,14 +1,29 @@
 all:
-  hosts:
-    localhost:
-      ansible_connection: local
-
   children:
+    # CATEGORY: Management (Control Plane)
     vcenter:
       hosts:
-        vcenter1:
-          ansible_host: "vc01.vt9labs.local"  # Your vCenter FQDN or IP
+        vcenter01:
+          ansible_host: "vc01.vt9labs.local"   # This matches group_vars/vcenters.yml
+          ansible_connection: local
+    cohesity:
+      hosts:
+        cohesity01:
+          ansible_host: "backup.vt9labs.local" # This matches group_vars/backup.yml
           ansible_connection: local
 
-# NEW: The ESXi host to query for this lab
-primary_esxi_hostname: "esx01.vt9labs.local"
+
+    # CATEGORY: Physical Infrastructure
+    hypervisors:
+      hosts:
+        esx01.vt9labs.local:
+        esx02.vt9labs.local:
+        esx03.vt9labs.local:
+
+
+    # CATEGORY: Guest Operating Systems
+    workloads:
+      children:
+        linux_vms:
+          hosts:
+            

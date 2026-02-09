@@ -1,0 +1,8 @@
+# Cohesity Cluster Credentials
+cohesity_server: "backup.vt9labs.local"
+cohesity_username: "admin"
+cohesity_password: "VMware1!"
+cohesity_validate_certs: false
+
+
+ansible_python_interpreter: "/Users/yash/Desktop/BOOTCAMP/ANSIBLE/venv/bin/python3.14"

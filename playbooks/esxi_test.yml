@@ -1,0 +1,18 @@
+---
+- name: Test ESXi Host System
+  hosts: hypervisors
+  gather_facts: true
+
+  tasks:
+    - name: Debug all available hardware facts
+      ansible.builtin.debug:
+        # This will show you exactly what names ESXi uses for hardware
+        var: ansible_facts.processor 
+
+    - name: Check ESXi Version via CLI
+      ansible.builtin.command: esxcli system version get
+      register: esxi_version
+
+    - name: Show Version Output
+      ansible.builtin.debug:
+        msg: "Version: {{ esxi_version.stdout_lines[0] }}"

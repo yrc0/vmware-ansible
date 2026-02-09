@@ -1,0 +1,8 @@
+---
+collections:
+  # The essential collection for managing ESXi, vCenter, and VMs
+  - name: community.vmware
+  
+  # The official collection for Cohesity data management
+  - name: cohesity.dataprotect
+  

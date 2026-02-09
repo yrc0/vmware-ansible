@@ -1,0 +1,3 @@
+# group_vars/hypervisors.yml
+ansible_user: root
+ansible_password: "VMware1!" # Use Ansible Vault for this later!

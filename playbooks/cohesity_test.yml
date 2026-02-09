@@ -1,0 +1,21 @@
+---
+- name: Test Cohesity Connectivity
+  hosts: cohesity
+  gather_facts: false
+  collections:
+    - cohesity.dataprotect
+
+  tasks:
+    - name: Gather Cohesity Cluster Facts
+      cohesity_facts:
+        cluster: "{{ cohesity_server }}"     # Changed from cluster_name to cluster
+        username: "{{ cohesity_username }}"
+        password: "{{ cohesity_password }}"
+        validate_certs: "{{ cohesity_validate_certs }}"
+      register: co_facts
+
+    - name: Show Cohesity Summary
+      debug:
+        msg: "Connected to Cohesity Cluster. Facts gathered successfully."
+        # Note: If the version check below fails, use 'var: co_facts' to see the actual structure
+        # msg: "Version: {{ co_facts.cohesity_output.cluster_info.release_version }}"
